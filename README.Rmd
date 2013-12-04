@@ -1,0 +1,31 @@
+quantRegLines
+========================================================
+
+This is an R function to plot multiple quantile regression lines at different levels of tau. It's adapted from the rq helpfile.
+
+
+```{r  fig.width=7, fig.height=6}
+source("./quantRegLines.R")
+
+library(scales)
+data(engel)
+attach(engel)
+
+taus <- c(.05,.1,.25,.75,.9,.95)
+plot(income,foodexp,xlab="Household Income",ylab="Food Expenditure",
+     pch=19, col=alpha("black", 0.5))
+
+rq_fit <- rq((foodexp)~(income),tau=taus)
+
+quantRegLines(rq_fit)
+```
+
+Or try it with multiple colors
+
+```{r  fig.width=7, fig.height=6}
+plot(income,foodexp,xlab="Household Income",ylab="Food Expenditure",
+     pch=19, col=alpha("black", 0.5))
+
+quantRegLines(rq_fit, rainbow(6))
+legend(4000, 1000, taus, rainbow(6), title="Tau")
+```
